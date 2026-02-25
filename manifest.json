@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Playlist Scraper",
+  "version": "1.1",
+  "description": "Export YouTube playlist titles, durations, and links to Excel.",
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/playlist*",
+        "https://www.youtube.com/watch*"
+      ],
+      "js": [
+        "xlsx.full.min.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "YouTube Scraper"
+  }
+}
