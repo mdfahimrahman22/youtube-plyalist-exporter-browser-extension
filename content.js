@@ -6,22 +6,44 @@
 function getPlaylistData() {
     let videoElements = [];
     let mainTitle = "Unknown";
+    const href = window.location.href;
     
     // 1. Grab the overall Title (Channel name or Playlist name)
-    const titleElement = 
-        document.querySelector('yt-page-header-view-model h1 span') || // New channel header
-        document.querySelector('ytd-playlist-header-renderer #text') || // Modern playlist title
-        document.querySelector('ytd-playlist-header-renderer .title') || // Alternative playlist title
-        document.querySelector('#header-description h3 yt-formatted-string a') || 
-        document.querySelector('#header-description h3 yt-formatted-string') ||
-        document.querySelector('h1#title');
-    
-    if (titleElement) {
-        mainTitle = titleElement.innerText.trim();
+    // Priority depends on the page type
+    if (href.includes('playlist') || (href.includes('watch') && href.includes('list='))) {
+        // Playlist Page or Watch Page with List
+        const playlistTitleElement = 
+            document.querySelector('ytd-playlist-panel-renderer .title') || // Watch page playlist sidebar
+            document.querySelector('ytd-playlist-header-renderer #title') || // Modern playlist page
+            document.querySelector('h1#title') || // Generic playlist title
+            document.querySelector('ytd-playlist-header-renderer h1') ||
+            document.querySelector('.ytp-playlist-menu-title'); // Embedded/Alternative
+        
+        if (playlistTitleElement) {
+            mainTitle = playlistTitleElement.innerText.trim();
+        }
+    } else if (href.includes('/videos')) {
+        // Channel Videos Section
+        const channelTitleElement = 
+            document.querySelector('yt-page-header-view-model h1 span') || // New channel header
+            document.querySelector('#channel-name #text') || // Legacy channel name
+            document.querySelector('ytd-channel-name #text');
+            
+        if (channelTitleElement) {
+            mainTitle = channelTitleElement.innerText.trim();
+        }
+    }
+
+    // Fallback if mainTitle is still "Unknown"
+    if (mainTitle === "Unknown") {
+        const fallbackTitle = 
+            document.querySelector('yt-page-header-view-model h1 span') ||
+            document.querySelector('h1#title') ||
+            document.querySelector('ytd-playlist-header-renderer .title');
+        if (fallbackTitle) mainTitle = fallbackTitle.innerText.trim();
     }
 
     // 2. Identify page type and find video items
-    const href = window.location.href;
     if (href.includes('playlist') || (href.includes('watch') && href.includes('list='))) {
         // Playlist Page or Watch Page with List
         if (href.includes('watch')) {
