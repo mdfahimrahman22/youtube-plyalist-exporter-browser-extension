@@ -12,8 +12,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.youtube.com/playlist*",
-        "https://www.youtube.com/watch*"
+        "https://www.youtube.com/*"
       ],
       "js": [
         "xlsx.full.min.js",
@@ -23,6 +22,7 @@
     }
   ],
   "action": {
-    "default_title": "YouTube Scraper"
+    "default_title": "YouTube Scraper",
+    "default_popup": "index.html"
   }
 }

@@ -1,39 +1,165 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <title>YouTube Scraper</title>
     <style>
         body {
-            width: 200px;
+            width: 250px;
+            padding: 20px;
+            font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            margin: 0;
+            user-select: none;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            margin: 0;
+            color: #0f0f0f;
+            font-weight: 700;
+        }
+
+        .yt-logo {
+            width: 32px;
+            height: 32px;
+            background: #FF0000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .instruction {
+            font-size: 13px;
+            color: #606060;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .stats-card {
+            background: #f8f8f8;
+            border-radius: 12px;
             padding: 15px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            border: 1px solid #eeeeee;
+        }
+
+        .video-count {
+            display: block;
+            font-size: 24px;
+            font-weight: 800;
+            color: #FF0000;
+            margin-bottom: 4px;
+        }
+
+        .video-label {
+            font-size: 12px;
+            color: #606060;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        #extract-btn {
+            background: #0f0f0f;
+            color: white;
+        }
+
+        #extract-btn:hover {
+            background: #2b2b2b;
+            transform: translateY(-1px);
+        }
+
+        #export-btn {
+            background: #FF0000;
+            color: white;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #export-btn.active {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        #export-btn.active:hover {
+            background: #cc0000;
+            transform: translateY(-1px);
+        }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 11px;
+            color: #909090;
             text-align: center;
         }
-        .header {
-            font-weight: bold;
-            color: #ff0000;
-            margin-bottom: 10px;
-        }
-        .instruction {
-            font-size: 12px;
-            color: #555;
-            line-height: 1.4;
-        }
-        .status-box {
-            margin-top: 10px;
-            padding: 5px;
-            background: #f0f0f0;
-            border-radius: 4px;
-            font-size: 11px;
-        }
+
     </style>
 </head>
 <body>
-    <div class="header">YT Playlist Scraper</div>
-    <div class="instruction">
-        Open a YouTube playlist and look for the <b>Red Export Button</b> on the page.
+    <div class="container">
+        <div class="header">
+            <div class="yt-logo">▶</div>
+            <h1>YT Scraper</h1>
+        </div>
+
+        <p class="instruction">Navigate to a playlist or channel videos section to extract data.</p>
+
+        <div class="stats-card">
+            <span class="video-count" id="count-value">0</span>
+            <span class="video-label" id="status-text">Videos Found</span>
+        </div>
+
+        <div class="button-group">
+            <button id="extract-btn">
+                <span>🔍</span> Extract Data
+            </button>
+            <button id="export-btn" disabled>
+                <span>📊</span> Export to Excel
+            </button>
+        </div>
+
+        <div class="footer">
+            Make sure to scroll down to load all videos.
+        </div>
     </div>
-    <div class="status-box">
-        Scroll down to load more videos!
-    </div>
+    <script src="popup.js"></script>
 </body>
 </html>
